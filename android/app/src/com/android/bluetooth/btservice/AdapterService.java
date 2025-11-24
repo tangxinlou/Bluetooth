@@ -475,6 +475,7 @@ public class AdapterService extends Service {
         super.onCreate();
         initMetricsLogger();
         debugLog("onCreate()");
+        Log.e(TAG,"AdapterService.java:478 tangxinlou debug 7" +  new Object(){}.getClass().getEnclosingMethod().getName());
         mDeviceConfigListener.start();
         mRemoteDevices = new RemoteDevices(this, Looper.getMainLooper());
         mRemoteDevices.init();
