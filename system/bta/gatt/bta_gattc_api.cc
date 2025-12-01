@@ -25,6 +25,7 @@
 #define LOG_TAG "bta_gattc_api"
 
 #include <base/bind.h>
+#include <android/log.h>
 #include <base/logging.h>
 
 #include <ios>
@@ -224,6 +225,7 @@ void BTA_GATTC_ConfigureMTU(uint16_t conn_id, uint16_t mtu) {
 
 void BTA_GATTC_ConfigureMTU(uint16_t conn_id, uint16_t mtu,
                             GATT_CONFIGURE_MTU_OP_CB callback, void* cb_data) {
+    __android_log_print(6,"tangxinlou debug 3","bta_gattc_api.cc:228  %s",__FUNCTION__);
   tBTA_GATTC_API_CFG_MTU* p_buf =
       (tBTA_GATTC_API_CFG_MTU*)osi_malloc(sizeof(tBTA_GATTC_API_CFG_MTU));
 

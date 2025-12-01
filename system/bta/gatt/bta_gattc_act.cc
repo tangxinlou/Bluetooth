@@ -26,6 +26,7 @@
 #define LOG_TAG "bt_bta_gattc"
 
 #include <base/bind.h>
+#include <android/log.h>
 #include <base/logging.h>
 #include <base/strings/stringprintf.h>
 
@@ -724,6 +725,7 @@ void bta_gattc_cfg_mtu(tBTA_GATTC_CLCB* p_clcb, const tBTA_GATTC_DATA* p_data) {
     /* Dequeue the data, if it was enqueued */
     if (p_clcb->p_q_cmd == p_data) p_clcb->p_q_cmd = NULL;
 
+    __android_log_print(6,"tangxinlou debug 5","bta_gattc_act.cc:727  %s",__FUNCTION__);
     bta_gattc_cmpl_sendmsg(p_clcb->bta_conn_id, GATTC_OPTYPE_CONFIG, status,
                            NULL);
   }
@@ -1037,6 +1039,7 @@ static void bta_gattc_cfg_mtu_cmpl(tBTA_GATTC_CLCB* p_clcb,
   void* my_cb_data = p_clcb->p_q_cmd->api_mtu.mtu_cb_data;
   tBTA_GATTC cb_data;
 
+  __android_log_print(6,"tangxinlou debug 6","bta_gattc_act.cc:1042  %s",__FUNCTION__);
   osi_free_and_reset((void**)&p_clcb->p_q_cmd);
 
   if (p_data->p_cmpl && p_data->status == GATT_SUCCESS)

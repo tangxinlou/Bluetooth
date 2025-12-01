@@ -3804,8 +3804,10 @@ public class GattService extends ProfileService {
         if (DBG) {
             Log.d(TAG, "configureMTU() - address=" + address + " mtu=" + mtu);
         }
+        Log.e(TAG,"GattService.java:3807 tangxinlou debug 0" +  new Object(){}.getClass().getEnclosingMethod().getName());
         Integer connId = mClientMap.connIdByAddress(clientIf, address);
         if (connId != null) {
+            Log.e(TAG,"GattService.java:3810 tangxinlou debug 4" +  new Object(){}.getClass().getEnclosingMethod().getName());
             gattClientConfigureMTUNative(connId, mtu);
         } else {
             Log.e(TAG, "configureMTU() - No connection for " + address + "...");

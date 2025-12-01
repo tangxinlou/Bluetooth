@@ -23,6 +23,7 @@
  ******************************************************************************/
 
 #include "bt_target.h"
+#include <android/log.h>
 #include "gatt_int.h"
 #include "l2c_api.h"
 #include "osi/include/allocator.h"
@@ -336,9 +337,11 @@ tGATT_STATUS attp_send_msg_to_l2cap(tGATT_TCB& tcb, uint16_t lcid,
 
   if (lcid == L2CAP_ATT_CID) {
     LOG_DEBUG("Sending ATT message on att fixed channel");
+    __android_log_print(6,"tangxinlou debug 11","att_protocol.cc:340  %s",__FUNCTION__);
     l2cap_ret = L2CA_SendFixedChnlData(lcid, tcb.peer_bda, p_toL2CAP);
   } else {
     LOG_DEBUG("Sending ATT message on lcid:%hu", lcid);
+    __android_log_print(6,"tangxinlou debug 10","att_protocol.cc:343  %s",__FUNCTION__);
     l2cap_ret = (uint16_t)L2CA_DataWrite(lcid, p_toL2CAP);
   }
 
@@ -433,6 +436,7 @@ static tGATT_STATUS attp_cl_send_cmd(tGATT_TCB& tcb, tGATT_CLCB* p_clcb,
                                      uint8_t cmd_code, BT_HDR* p_cmd) {
   cmd_code &= ~GATT_AUTH_SIGN_MASK;
 
+  __android_log_print(6,"tangxinlou debug 16","att_protocol.cc:439  %s",__FUNCTION__);
   if (gatt_tcb_is_cid_busy(tcb, p_clcb->cid) &&
       cmd_code != GATT_HANDLE_VALUE_CONF) {
     gatt_cmd_enq(tcb, p_clcb, true, cmd_code, p_cmd);
@@ -455,6 +459,7 @@ static tGATT_STATUS attp_cl_send_cmd(tGATT_TCB& tcb, tGATT_CLCB* p_clcb,
 
   LOG_DEBUG("Starting ATT response timer");
   gatt_start_rsp_timer(p_clcb);
+  __android_log_print(6,"tangxinlou debug 9","att_protocol.cc:458  %s",__FUNCTION__);
   gatt_cmd_enq(tcb, p_clcb, false, cmd_code, NULL);
   return att_ret;
 }
@@ -516,6 +521,7 @@ tGATT_STATUS attp_send_cl_msg(tGATT_TCB& tcb, tGATT_CLCB* p_clcb,
 
   uint16_t payload_size = gatt_tcb_get_payload_size_tx(tcb, p_clcb->cid);
 
+  __android_log_print(6,"tangxinlou debug 12","att_protocol.cc:523  %s",__FUNCTION__);
   switch (op_code) {
     case GATT_REQ_MTU:
       if (p_msg->mtu > GATT_MAX_MTU_SIZE) {
@@ -602,5 +608,6 @@ tGATT_STATUS attp_send_cl_msg(tGATT_TCB& tcb, tGATT_CLCB* p_clcb,
     return GATT_NO_RESOURCES;
   }
 
+  __android_log_print(6,"tangxinlou debug 15","att_protocol.cc:610  %s",__FUNCTION__);
   return attp_cl_send_cmd(tcb, p_clcb, op_code, p_cmd);
 }

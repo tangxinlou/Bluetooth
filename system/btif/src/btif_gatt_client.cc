@@ -27,6 +27,7 @@
 #define LOG_TAG "bt_btif_gattc"
 
 #include <base/at_exit.h>
+#include <android/log.h>
 #include <base/bind.h>
 #include <base/logging.h>
 #include <base/threading/thread.h>
@@ -625,6 +626,7 @@ static bt_status_t btif_gattc_read_remote_rssi(int client_if,
 
 static bt_status_t btif_gattc_configure_mtu(int conn_id, int mtu) {
   CHECK_BTGATT_INIT();
+  __android_log_print(6,"tangxinlou debug 2","btif_gatt_client.cc:628  %s",__FUNCTION__);
   return do_in_jni_thread(
       Bind(base::IgnoreResult(
         static_cast<void (*)(uint16_t,uint16_t)>(&BTA_GATTC_ConfigureMTU)),

@@ -22,6 +22,7 @@
  *
  ******************************************************************************/
 #include "gatt_api.h"
+#include <android/log.h>
 
 #include <base/logging.h>
 #include <base/strings/string_number_conversions.h>
@@ -607,6 +608,7 @@ tGATT_STATUS GATTC_ConfigureMTU(uint16_t conn_id, uint16_t mtu) {
   tGATT_TCB* p_tcb = gatt_get_tcb_by_idx(tcb_idx);
   tGATT_REG* p_reg = gatt_get_regcb(gatt_if);
 
+  __android_log_print(6,"tangxinlou debug 14","gatt_api.cc:611  %s",__FUNCTION__);
   if ((p_tcb == NULL) || (p_reg == NULL) || (mtu < GATT_DEF_BLE_MTU_SIZE) ||
       (mtu > GATT_MAX_MTU_SIZE)) {
     LOG_WARN(
@@ -614,22 +616,26 @@ tGATT_STATUS GATTC_ConfigureMTU(uint16_t conn_id, uint16_t mtu) {
         "mtu:%hu tcb:%s reg:%s",
         conn_id, mtu, (p_tcb == nullptr) ? "BAD" : "ok",
         (p_reg == nullptr) ? "BAD" : "ok");
+    __android_log_print(6,"tangxinlou debug 19","gatt_api.cc:619  %s",__FUNCTION__);
     return GATT_ILLEGAL_PARAMETER;
   }
 
   /* Validate that the link is BLE, not BR/EDR */
   if (p_tcb->transport != BT_TRANSPORT_LE) {
+      __android_log_print(6,"tangxinlou debug 18","gatt_api.cc:624  %s",__FUNCTION__);
     return GATT_ERROR;
   }
 
   if (gatt_is_clcb_allocated(conn_id)) {
     LOG_WARN("Connection is already used conn_id:%hu", conn_id);
+    __android_log_print(6,"tangxinlou debug 17","gatt_api.cc:629  %s",__FUNCTION__);
     return GATT_BUSY;
   }
 
   tGATT_CLCB* p_clcb = gatt_clcb_alloc(conn_id);
   if (!p_clcb) {
     LOG_WARN("Unable to allocate connection link control block");
+    __android_log_print(6,"tangxinlou debug 20","gatt_api.cc:638  %s",__FUNCTION__);
     return GATT_NO_RESOURCES;
   }
 
@@ -641,6 +647,7 @@ tGATT_STATUS GATTC_ConfigureMTU(uint16_t conn_id, uint16_t mtu) {
   gatt_cl_msg.mtu = mtu;
   LOG_DEBUG("Configuring ATT mtu size conn_id:%hu mtu:%hu", conn_id, mtu);
 
+  __android_log_print(6,"tangxinlou debug 13","gatt_api.cc:644  %s",__FUNCTION__);
   return attp_send_cl_msg(*p_clcb->p_tcb, p_clcb, GATT_REQ_MTU, &gatt_cl_msg);
 }
 
