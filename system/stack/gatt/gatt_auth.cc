@@ -22,6 +22,7 @@
  *
  ******************************************************************************/
 #include <string.h>
+#include <android/log.h>
 
 #include "bt_target.h"
 #include "bt_utils.h"
@@ -141,6 +142,7 @@ void gatt_sec_check_complete(bool sec_check_ok, tGATT_CLCB* p_clcb,
   if (!sec_check_ok) {
     gatt_end_operation(p_clcb, GATT_AUTH_FAIL, NULL);
   } else if (p_clcb->operation == GATTC_OPTYPE_WRITE) {
+      __android_log_print(6,"tangxinlou debug 48","gatt_auth.cc:146  %s",__FUNCTION__);
     gatt_act_write(p_clcb, sec_act);
   } else if (p_clcb->operation == GATTC_OPTYPE_READ) {
     gatt_act_read(p_clcb, p_clcb->counter);
@@ -437,6 +439,7 @@ bool gatt_security_check_start(tGATT_CLCB* p_clcb) {
       /* wait for link encrypotion to finish */
       return true;
     default:
+      __android_log_print(6,"tangxinlou debug 46","gatt_auth.cc:440  %s",__FUNCTION__);
       gatt_sec_check_complete(true, p_clcb, gatt_sec_act);
       break;
   }

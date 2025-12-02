@@ -435,7 +435,7 @@ typedef struct {
   uint16_t len;    /* length of attribute value */
   tGATT_AUTH_REQ auth_req;          /*  authentication request */
   uint8_t value[GATT_MAX_ATTR_LEN]; /* the actual attribute value */
-} tGATT_VALUE;
+}170 tGATT_VALUE;
 
 /* Union of the event data which is used in the server respond API to carry the
  * server response information

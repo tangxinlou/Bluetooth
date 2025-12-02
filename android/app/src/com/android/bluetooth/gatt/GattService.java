@@ -2353,6 +2353,7 @@ public class GattService extends ProfileService {
             mPermits.get(address).set(true);
         }
 
+        Log.e(TAG,"GattService.java:2356 tangxinlou debug 39" +  new Object(){}.getClass().getEnclosingMethod().getName());
         if (VDBG) {
             Log.d(TAG, "onWriteCharacteristic() - address=" + address + ", status=" + status
                     + ", length=" + data.length);

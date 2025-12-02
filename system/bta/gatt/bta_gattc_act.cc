@@ -1,3 +1,11 @@
+/*******************************************************
+$Author       : 唐新楼 
+$Last modified: 2025-12-02 15:46
+$Email        : 个人邮箱
+$blog         : https://blog.csdn.net/daweigongting
+$Filename     : bta_gattc_act.cc
+$Description  : tangxinlou
+*******************************************************/
 /******************************************************************************
  *
  *  Copyright 2003-2012 Broadcom Corporation
@@ -908,8 +916,10 @@ void bta_gattc_read_multi(tBTA_GATTC_CLCB* p_clcb,
 
 /** Write an attribute */
 void bta_gattc_write(tBTA_GATTC_CLCB* p_clcb, const tBTA_GATTC_DATA* p_data) {
+    __android_log_print(6,"tangxinlou debug 44","bta_gattc_act.cc:920  %s",__FUNCTION__);
   if (!bta_gattc_enqueue(p_clcb, p_data)) return;
 
+  __android_log_print(6,"tangxinlou debug 42","bta_gattc_act.cc:913  %s",__FUNCTION__);
   tGATT_STATUS status = GATT_SUCCESS;
   tGATT_VALUE attr;
 
@@ -930,6 +940,7 @@ void bta_gattc_write(tBTA_GATTC_CLCB* p_clcb, const tBTA_GATTC_DATA* p_data) {
     /* Dequeue the data, if it was enqueued */
     if (p_clcb->p_q_cmd == p_data) p_clcb->p_q_cmd = NULL;
 
+    __android_log_print(6,"tangxinlou debug 43","bta_gattc_act.cc:942  %s",__FUNCTION__);
     bta_gattc_cmpl_sendmsg(p_clcb->bta_conn_id, GATTC_OPTYPE_WRITE, status,
                            NULL);
   }
@@ -993,7 +1004,9 @@ static void bta_gattc_write_cmpl(tBTA_GATTC_CLCB* p_clcb,
   GATT_WRITE_OP_CB cb = p_clcb->p_q_cmd->api_write.write_cb;
   void* my_cb_data = p_clcb->p_q_cmd->api_write.write_cb_data;
 
+  __android_log_print(6,"tangxinlou debug 35","bta_gattc_act.cc:996  %s",__FUNCTION__);
   if (cb) {
+      __android_log_print(6,"tangxinlou debug 37","bta_gattc_act.cc:998  %s",__FUNCTION__);
     if (p_data->status == 0 &&
         p_clcb->p_q_cmd->api_write.write_type == BTA_GATTC_WRITE_PREPARE) {
       LOG_DEBUG("Handling prepare write success response: handle 0x%04x",
@@ -1004,6 +1017,7 @@ static void bta_gattc_write_cmpl(tBTA_GATTC_CLCB* p_clcb,
          p_data->p_cmpl->att_value.len, p_data->p_cmpl->att_value.value,
          my_cb_data);
     } else {
+        __android_log_print(6,"tangxinlou debug 38","bta_gattc_act.cc:1009  %s",__FUNCTION__);
       LOG_DEBUG("Handling write response type: %d: handle 0x%04x",
                 p_clcb->p_q_cmd->api_write.write_type,
                 p_data->p_cmpl->att_value.handle);
@@ -1065,6 +1079,7 @@ void bta_gattc_op_cmpl(tBTA_GATTC_CLCB* p_clcb, const tBTA_GATTC_DATA* p_data) {
     return;
   }
 
+  __android_log_print(6,"tangxinlou debug 40","bta_gattc_act.cc:1071  %s",__FUNCTION__);
   const tGATTC_OPTYPE op = p_data->op_cmpl.op_code;
   switch (op) {
     case GATTC_OPTYPE_READ:
@@ -1481,6 +1496,7 @@ static void bta_gattc_cmpl_sendmsg(uint16_t conn_id, tGATTC_OPTYPE op,
   const size_t len = sizeof(tBTA_GATTC_OP_CMPL) + sizeof(tGATT_CL_COMPLETE);
   tBTA_GATTC_OP_CMPL* p_buf = (tBTA_GATTC_OP_CMPL*)osi_calloc(len);
 
+  __android_log_print(6,"tangxinlou debug 41","bta_gattc_act.cc:1488  %s",__FUNCTION__);
   p_buf->hdr.event = BTA_GATTC_OP_CMPL_EVT;
   p_buf->hdr.layer_specific = conn_id;
   p_buf->status = status;

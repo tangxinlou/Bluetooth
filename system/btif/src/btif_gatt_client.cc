@@ -511,6 +511,7 @@ static bt_status_t btif_gattc_read_char_descr(int conn_id, uint16_t handle,
 void write_char_cb(uint16_t conn_id, tGATT_STATUS status, uint16_t handle,
                    uint16_t len, const uint8_t* value, void* data) {
   std::vector<uint8_t> val(value, value + len);
+  __android_log_print(6,"tangxinlou debug 36","btif_gatt_client.cc:515  %s",__FUNCTION__);
   CLI_CBACK_WRAP_IN_JNI(
       write_characteristic_cb,
       base::BindOnce(

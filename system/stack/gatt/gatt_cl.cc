@@ -25,6 +25,7 @@
 #define LOG_TAG "bluetooth"
 
 #include <string.h>
+#include <android/log.h>
 
 #include "bt_target.h"
 #include "bt_utils.h"
@@ -248,6 +249,7 @@ void gatt_act_write(tGATT_CLCB* p_clcb, uint8_t sec_act) {
       if (attr.len <= (payload_size - GATT_HDR_SIZE)) {
         p_clcb->s_handle = attr.handle;
 
+        __android_log_print(6,"tangxinlou debug 45","gatt_cl.cc:251  %s",__FUNCTION__);
         tGATT_STATUS rt = gatt_send_write_msg(
             tcb, p_clcb, GATT_REQ_WRITE, attr.handle, attr.len, 0, attr.value);
         if (rt != GATT_SUCCESS && rt != GATT_CMD_STARTED &&

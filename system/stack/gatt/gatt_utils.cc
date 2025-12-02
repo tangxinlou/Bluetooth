@@ -24,6 +24,7 @@
 #define LOG_TAG "gatt_utils"
 
 #include <base/logging.h>
+#include <android/log.h>
 #include <base/strings/stringprintf.h>
 
 #include <cstdint>
@@ -1484,6 +1485,7 @@ tGATT_STATUS gatt_send_write_msg(tGATT_TCB& tcb, tGATT_CLCB* p_clcb,
   memcpy(msg.attr_value.value, p_data, len);
 
   /* write by handle */
+  __android_log_print(6,"tangxinlou debug 47","gatt_utils.cc:1487  %s",__FUNCTION__);
   return attp_send_cl_msg(tcb, p_clcb, op_code, &msg);
 }
 
